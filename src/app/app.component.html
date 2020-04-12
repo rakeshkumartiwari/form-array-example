@@ -1,48 +1,56 @@
 <div class="container">
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Address</h3>
+      <h5 class="card-title">Address</h5>
     </div>
     <div class="card-body">
       <form [formGroup]="addressGroup">
-        <div class="form-group">
-          <label>Address 1</label>
-          <input type="text" class="form-control" formControlName="address1" required>
-        </div>
-        <div class="form-group">
-          <label>Address 2</label>
-          <input type="text" class="form-control" formControlName="address2">
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label>State</label>
-            <select class="form-control" formControlName="state">
-              <option *ngFor="let state of stateList" [ngValue]="state">
-                {{state.name}}
-              </option>
-            </select>
-          </div>
-          <div class="form-group col-md-6">
-            <label>City</label>
-            <input type="text" class="form-control" formControlName="city">
-          </div>
-          <div class="form-group col-md-2">
-            <label>Zip Code</label>
-            <input type="number" class="form-control" formControlName="zip">
+        <div formArrayName="addresses" *ngFor="let address of addresses.controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="form-group">
+              <label>Address 1</label>
+              <input type="text" class="form-control" formControlName="address1" required>
+            </div>
+            <div class="form-group">
+              <label>Address 2</label>
+              <input type="text" class="form-control" formControlName="address2">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>State</label>
+                <select class="form-control" formControlName="state">
+                  <option *ngFor="let state of stateList" [ngValue]="state">
+                    {{state.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label>City</label>
+                <input type="text" class="form-control" formControlName="city">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Zip Code</label>
+                <input type="number" class="form-control" formControlName="zip">
+              </div>
+            </div>
           </div>
         </div>
       </form>
+
     </div>
-    <div class="card-footer">
-      <button class="btn btn-primary">Add</button>
+    <div class="form-group col-md-6">
+      <button class="btn btn-outline-primary" (click)="addAddress()" [disabled]="!addresses.valid">
+        Add Another Address
+      </button>
     </div>
+
   </div>
 </div>
 
 <div class="container">
-    <div class="row"> address: {{addressGroup.value | json}}</div>
-    <div class="row">invalid: {{addressGroup.invalid | json}}</div>
-    <div class="row">Toched: {{addressGroup.touched | json}}</div>
-    <div class="row">dirty: {{addressGroup.dirty | json}}</div>
-    <div class="row">pristine: {{addressGroup.pristine | json}}</div>
+  <div class="row"> addresses: {{addressGroup.value | json}}</div>
+  <div class="row">invalid: {{addressGroup.invalid | json}}</div>
+  <div class="row">Toched: {{addressGroup.touched | json}}</div>
+  <div class="row">dirty: {{addressGroup.dirty | json}}</div>
+  <div class="row">pristine: {{addressGroup.pristine | json}}</div>
 </div>
